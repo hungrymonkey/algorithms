@@ -1,4 +1,6 @@
-const bin_search = require('./bin.js');
+if ( typeof require === "function"){
+   const bin_search = require('./bin.js');
+}
 
 
 
