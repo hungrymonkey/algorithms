@@ -24,16 +24,17 @@ DFS.prototype.find = function( start, end ){
     verts.forEach((e)=> (visited.set(e, false)));
     var stack = [start];
     var path = [];
+    visited.set(start,true);
     while( stack.length > 0 ){
         var n = stack.pop();
         path.push(n);
         if( n === end ){
             return path;
         }
-        visited.set(n,true);
         if( !visited[n] ){
             var neighbors = this.g[n];
             if( neighbors !== undefined ){
+                visited.set(n,true);
                 neighbors.forEach( function(e){ if(!visited[e])
                                              {stack.push(e);}});
             }else{
