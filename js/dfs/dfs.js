@@ -34,7 +34,7 @@ DFS.prototype.find = function( start, end ){
             visited.set(n,true);
             var neighbors = this.g[n];
             if( neighbors !== undefined ){
-                neighbors.forEach( function(e){ if(stack.indexOf(e) < 0)
+                neighbors.forEach( function(e){ if(!visited[e])
                                              {stack.push(e);}});
             }else{
                 path.pop();
