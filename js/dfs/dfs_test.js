@@ -37,5 +37,6 @@ var main = function(){
    var d3 = new DFS(g3);
    console.log("Test start not in graph: " + ( [].toString() === d3.find('4','3').toString() ));
    console.log("Test end not in graph: " + ([].toString() === d3.find('5','6').toString() ));
+   console.log("g3 5->9: " + d3.find('5','9').toString());
 };
 main()

@@ -23,6 +23,28 @@ DFS.prototype.find = function( start, end ){
     }
     var visited = new Map();
     verts.forEach((e)=> (visited.set(e, false)));
+    var stack = [start];
+    var path = [];
+    while( stack.length > 0 ){
+        var n = stack.pop();
+        path.push(n);
+        if( n === end ){
+            return path;
+        }
+        visited.set(n,true);
+        if( !visited[n] ){
+            visited.set(n,true);
+            var neighbors = this.g[n];
+            if( neighbors !== undefined ){
+                neighbors.forEach( (e) => stack.push(e));
+            }else{
+                path.pop();
+            }
+        }else{
+            path.pop();
+        }
+    }
+    return [];
 };
 (function(exports){
 
