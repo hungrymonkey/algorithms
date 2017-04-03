@@ -1,5 +1,6 @@
+"use strict";
 if ( typeof require === "function"){
-   var Queue = require('./Queue.js').Queue;
+   const Queue = require('./Queue.js').Queue;
 }
 
 var DFS = function(graph){
@@ -8,7 +9,7 @@ var DFS = function(graph){
 // returns a set
 DFS.prototype.vertices = function(){
     var s = new Set();
-    for( k in this.g ){
+    for( var k in this.g ){
         s.add(k);
         this.g[k].forEach((e)=>( s.add(e)));
     }
