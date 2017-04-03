@@ -35,10 +35,13 @@ var main = function(){
    var g2 = JSON.parse(graph2_txt); 
    var g3 = JSON.parse(graph3_txt); 
    var d3 = new DFS(g3);
+   var d2 = new DFS(g2);
    var d1 = new DFS(g1);
    console.log("Test start not in graph: " + ( [].toString() === d3.find('4','3').toString() ));
    console.log("Test end not in graph: " + ([].toString() === d3.find('5','6').toString() ));
    console.log("g3 5->9: " + d3.find('5','9').toString());
-   console.log("g1 1->6: " + d1.find('0','7').toString());
+   console.log("g2 0->3: " + d2.find('0','3').toString());
+   console.log("g2 1->3: " + d2.find('1','3').toString());
+   //console.log("g1 1->6: " + d1.find('1','3').toString());
 };
 main()
