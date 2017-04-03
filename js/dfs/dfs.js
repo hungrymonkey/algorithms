@@ -10,9 +10,7 @@ DFS.prototype.vertices = function(){
     var s = new Set();
     for( k in this.g ){
         s.add(k);
-        this.g[k].forEach(function(e){
-            s.add(e);
-        });
+        this.g[k].forEach((e)=>( s.add(e)));
     }
     return s;
 };
@@ -36,7 +34,8 @@ DFS.prototype.find = function( start, end ){
             visited.set(n,true);
             var neighbors = this.g[n];
             if( neighbors !== undefined ){
-                neighbors.forEach( (e) => stack.push(e));
+                neighbors.forEach( function(e){ if(stack.indexOf(e) < 0)
+                                             {stack.push(e);}});
             }else{
                 path.pop();
             }
