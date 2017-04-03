@@ -1,5 +1,5 @@
 if ( typeof require === "function"){
-   var DFS = require('./dfs.js').DFS;
+   var DFS_lib = require('./dfs.js');
 }
 // I am lazy on creating test for dfs because,
 // I realize I do not want to create a test and
@@ -34,9 +34,9 @@ var main = function(){
    var g1 = JSON.parse(graph1_txt); 
    var g2 = JSON.parse(graph2_txt); 
    var g3 = JSON.parse(graph3_txt); 
-   var d3 = new DFS(g3);
-   var d2 = new DFS(g2);
-   var d1 = new DFS(g1);
+   var d3 = new DFS_lib.DFS(g3);
+   var d2 = new DFS_lib.DFS(g2);
+   var d1 = new DFS_lib.DFS(g1);
    console.log("Test start not in graph: " + ( [].toString() === d3.find('4','3').toString() ));
    console.log("Test end not in graph: " + ([].toString() === d3.find('5','6').toString() ));
    console.log("g3 5->9: " + d3.find('5','9').toString());

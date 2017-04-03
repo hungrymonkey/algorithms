@@ -49,5 +49,5 @@ DFS.prototype.find = function( start, end ){
 
   exports.DFS = DFS; 
 
-}(typeof exports === 'undefined' ? this.DFS = {} : exports));
+}(typeof exports === 'undefined' ? this.DFS_lib = {} : exports));
 
