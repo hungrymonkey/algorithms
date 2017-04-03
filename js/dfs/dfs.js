@@ -33,10 +33,17 @@ DFS.prototype.find = function( start, end ){
         }
         if( !visited[n] ){
             var neighbors = this.g[n];
+            visited.set(n,true);
             if( neighbors !== undefined ){
-                visited.set(n,true);
-                neighbors.forEach( function(e){ if(!visited[e])
-                                             {stack.push(e);}});
+                var len_neighbors = neighbors.length;
+
+                for( var i = 0; i < len_neighbors; i++){
+                    if( !visited[neighbors[i]]){
+                        stack.push(neighbors[i]);
+                    }
+                }
+             //   neighbors.forEach( function(e){ if(!visited[e])
+               //                              {stack.push(e);}});
             }else{
                 path.pop();
             }
