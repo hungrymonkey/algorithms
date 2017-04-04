@@ -42,6 +42,6 @@ var main = function(){
    console.log("g3 5->9: " + d3.find('5','9').toString());
    console.log("g2 0->3: " + d2.find('0','3').toString());
    console.log("g2 1->3: " + d2.find('1','3').toString());
-   //console.log("g1 1->6: " + d1.find('1','6').toString());
+   console.log("g1 1->6: " + d1.find('1','6').toString());
 };
 main()
