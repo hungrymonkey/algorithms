@@ -3,8 +3,9 @@ CFLAGS=-Wall -g -std=c99
 
 
 HEADERS = rtree.h
-TEST_SRC = $(wildcard ./test/*.c)
-TEST_TARGET = $(TEST_SRC:./test/%.c=%.out)
+TEST_DIR = ./test/
+TEST_SRC = $(wildcard $(TEST_DIR)*.c)
+TEST_TARGET = $(TEST_SRC:$(TEST_DIR)%.c=%.out)
 SRC = $(wildcard *.c)
 OBJS = $(SRC:.c=.o)
 
@@ -20,7 +21,7 @@ t:
 
 test: $(TEST_TARGET)
 
-$(TEST_TARGET): %.out:./test/%.c $(OBJS)
+$(TEST_TARGET): %.out:$(TEST_DIR)%.c $(OBJS)
 	$(CC) $(OBJS) $(CFLAGS) $<  -o $@
 
 
