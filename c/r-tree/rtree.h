@@ -42,4 +42,5 @@ bool rt_check_bounds(const struct RTree_Data bigger, const struct RTree_Data sma
 bool rt_check_bounds_rectangle(const struct Reactangle bigger, const struct Reactangle smaller);
 bool rt_check_bounds_point(const struct Reactangle b, const struct Point p);
 struct RTree_Node *rt_new_node();
+void RTree_free( struct RTree_Node *n);
 #endif
