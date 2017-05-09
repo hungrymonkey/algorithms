@@ -22,6 +22,7 @@ bool rt_check_bounds(const struct RTree_Data larger, const struct RTree_Data sma
 }
 void rt_init_data( struct RTree_Data *d){
     d->ty = NONE;
+    memset(&(d->d), 0, sizeof(union RTree_Data_p));
 }
 void rt_init_branch( struct RTree_Branch *b){
     b-> c = NULL;
