@@ -20,9 +20,26 @@ bool rt_check_bounds(const struct RTree_Data larger, const struct RTree_Data sma
     }
     return false;
 }
+void rt_init_data( struct RTree_Data *d){
+    d->ty = NONE;
+}
+void rt_init_branch( struct RTree_Branch *b){
+    b-> c = NULL;
+    rt_init_data(&(b->d));
+    
+}
+void rt_init_node( struct RTree_Node *n ){
+    n->depth = -1;
+    n->count = 0;
+    for( int i = 0; i < M; i++){
+        rt_init_branch(&(n->b[i]));
+    }
+}
+
 struct RTree_Node *rt_new_node(){
     struct RTree_Node *n = (struct RTree_Node *) malloc (sizeof(struct RTree_Node));
-    
+    rt_init_node(n);
+    return n;
 }
 struct RTree_Node *rt_new_root(){
     struct RTree_Node  *x;
@@ -30,7 +47,7 @@ struct RTree_Node *rt_new_root(){
     x->depth = 0; /* leaf */
     return x;
 }
-void rt_copy_range(struct RTree_Node *dst, struct RTree_Node *src, int start, int end){
+void rt_copy_r(struct RTree_Node *dst, struct RTree_Node *src, int start, int end){
     struct RTree_Branch *b_src = &(src->b[start]);
     struct RTree_Branch *b_dst = src->b;
     /* potential off by one error 
