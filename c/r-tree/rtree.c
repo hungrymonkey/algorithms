@@ -4,6 +4,7 @@
 #include <string.h>
 #include <assert.h>
 #include "rtree.h"
+#include "utils.h"
 
 bool rt_contains_point(const struct Reactangle b, const struct Point p){
     return(  b.w   >= (unsigned) ( p.x - b.x ) &&
@@ -39,19 +40,37 @@ bool rt_equals_data(const struct RTree_Data left, const struct RTree_Data right)
     return false;
 }
 //https://gamedev.stackexchange.com/questions/586/what-is-the-fastest-way-to-work-out-2d-bounding-box-intersection?rq=1
-bool rt_overlaps_rectange(const struct Reactangle a, const struct Reactangle b){
+bool rt_intersect_rectange(const struct Reactangle a, const struct Reactangle b){
     return (abs(a.x - b.x) * 2 < (a.w + b.w)) &&
             (abs(a.y - b.y) * 2 < (a.h + b.h));
 }
-bool rt_overlaps_data(const struct RTree_Data left, const struct RTree_Data right){
+bool rt_intersect_data(const struct RTree_Data left, const struct RTree_Data right){
     if( right.ty != left.ty ) return false;
     switch( right.ty ){
         case POINT: return false;
-        case RECTANGLE:  return rt_overlaps_rectange( left.d.r, right.d.r);
+        case RECTANGLE:  return rt_intersect_rectange( left.d.r, right.d.r);
             
         default: return false;
     }
     return false;
+    
+}
+//http://dbs.mathematik.uni-marburg.de/publications/myPapers/1990/BKSS90.pdf
+//https://math.stackexchange.com/questions/99565/simplest-way-to-calculate-the-intersect-area-of-two-rectangles
+int rt_overlaps_rectangle( const struct Reactangle a, const struct Reactangle b){
+    int x_overlap = MAX(0, MIN( a.x + a.w, b.x + b.w) - MAX( a.x, b.x));
+    int y_overlap = MAX(0, MIN( a.y + a.h, b.y + b.h) - MAX( a.y, b.y));
+    return x_overlap * y_overlap;
+}
+//TODO: overlaps only allow the same type. Change mix behavior later
+int rt_overlaps_data(const struct RTree_Data left, const struct RTree_Data right){
+    if( right.ty != left.ty ) return 0;
+    switch( right.ty ){
+        case POINT: return 0;
+        case RECTANGLE:  return rt_overlaps_rectangle( left.d.r, right.d.r);
+        default: return 0;
+    }
+    return 0;
     
 }
 void rt_init_data( struct RTree_Data *d){

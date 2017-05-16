@@ -46,8 +46,8 @@ bool rt_contains_rectangle(const struct Reactangle bigger, const struct Reactang
 bool rt_equals_rectangle(const struct Reactangle l, const struct Reactangle r);
 bool rt_equals_point(const struct Point l, const struct Point r);
 bool rt_equals_data(const struct RTree_Data l, const struct RTree_Data r);
-bool rt_overlaps_data(const struct RTree_Data l, const struct RTree_Data r);
-
+bool rt_intersect_data(const struct RTree_Data l, const struct RTree_Data r);
+int rt_overlaps_data(const struct RTree_Data left, const struct RTree_Data right);
 void rt_init_data( struct RTree_Data *d );
 void rt_init_branch( struct RTree_Branch *b);
 void rt_init_node( struct RTree_Node *n );
