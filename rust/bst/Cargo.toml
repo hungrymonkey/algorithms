@@ -1,0 +1,6 @@
+[package]
+name = "bst"
+version = "0.1.0"
+authors = ["hungrymonkey <boringmonkey@gmail.com>"]
+
+[dependencies]
