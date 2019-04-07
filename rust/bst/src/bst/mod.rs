@@ -13,10 +13,23 @@ impl <T: Ord> BST<T> {
       BST{ size: 0, root: Node::Nil }
    }
    pub fn insert(&mut self, v: T) -> bool {
-      if self.empty() {
-          self.root = Node::Leaf(v);
-          self.size = self.size + 1;
-          return true;
+      
+      match self.root {
+         Node::Nil => {
+            self.root = Node::Leaf(v);
+            self.size += 1;
+            return true;
+         },
+         Node::Leaf(e) => {
+            if e < v {
+               self.root = Node::Node(e, None, Box::new(Node::Leaf(v)), Box::new(Node::Nil) )
+            } else {
+               self.root = Node::Node(e, None, Box::new(Node::Nil), Box::new(Node::Leaf(v)) )
+            }
+         }
+         Node::Node(e, _, l, r ) => {
+
+         }
       }
       return false;
           
