@@ -17,12 +17,12 @@ impl<T> Cons<T> {
 	pub fn append(prev: &mut Rc<RefCell<Cons<T>>>, data: T) -> Option<Rc<RefCell<Cons<T>>>> {
 		//
 		// Check if the node is a tail
-		let mut next  = &prev.borrow_mut().next;
+		let mut next  = &mut prev.borrow_mut().next;
 		match &mut next {
 			Some(n) => {
 				let e = Self { data: data, prev: Some(Rc::downgrade(&prev)), next: Some(n.clone()) };
 				let rc = Rc::new(RefCell::new(e));
-				n.borrow_mut().next = Some(rc.clone());
+				n.borrow_mut().next = Some(rc.clone()); //This line might be wrong. Check later
 				n.borrow_mut().prev = Some(Rc::downgrade(&rc));
 				Some(rc)
 			}
@@ -31,7 +31,7 @@ impl<T> Cons<T> {
 				//e.prev = Some(Rc::downgrade(&prev));
 				let e = Self { data: data, prev: Some(Rc::downgrade(&prev)), next: None };
 				let rc = Rc::new(RefCell::new(e));
-				next = &Some(rc.clone());
+				*next = Some(rc.clone());
 				Some(rc)
 			}
 		}
