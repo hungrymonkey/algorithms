@@ -1,4 +1,3 @@
-use std::fmt;
 use std::fmt::{Display};
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
@@ -18,20 +17,21 @@ impl<T> Cons<T> {
 	pub fn append(prev: &mut Rc<RefCell<Cons<T>>>, data: T) -> Option<Rc<RefCell<Cons<T>>>> {
 		//
 		// Check if the node is a tail
-		match &mut prev.borrow_mut().next {
-			Some(next) => {
-				let mut e = Self { data: data, prev: Some(Rc::downgrade(&prev)), next: Some(next.clone()) };
+		let mut next  = &prev.borrow_mut().next;
+		match &mut next {
+			Some(n) => {
+				let e = Self { data: data, prev: Some(Rc::downgrade(&prev)), next: Some(n.clone()) };
 				let rc = Rc::new(RefCell::new(e));
-				prev.borrow_mut().next = Some(rc.clone());
-				next.borrow_mut().prev = Some(Rc::downgrade(&rc));
+				n.borrow_mut().next = Some(rc.clone());
+				n.borrow_mut().prev = Some(Rc::downgrade(&rc));
 				Some(rc)
 			}
 			None => {
 				//let mut e = Cons::new(data);
 				//e.prev = Some(Rc::downgrade(&prev));
-				let mut e = Self { data: data, prev: Some(Rc::downgrade(&prev)), next: None };
+				let e = Self { data: data, prev: Some(Rc::downgrade(&prev)), next: None };
 				let rc = Rc::new(RefCell::new(e));
-				prev.borrow_mut().next = Some(rc.clone());
+				next = &Some(rc.clone());
 				Some(rc)
 			}
 		}
@@ -49,7 +49,10 @@ impl <T> LinkedList<T> {
 	}
 	pub fn append( &mut self, data: T ) {
 		match &mut self.tail {
-			Some(tail) => { Cons::append(tail, data); }
+			Some(tail) => { 
+				let e = Cons::append(tail, data);
+				self.tail = e;
+			}
 			None => {
 				let e = Rc::new(RefCell::new(Cons::new(data)));
 				self.head = Some(e.clone());
