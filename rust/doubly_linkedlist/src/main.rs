@@ -7,5 +7,7 @@ fn main() {
     for i in 1..10 {
         list.append(i);
     }
+    //list.next().append(10)
+    println!("Size of list: {}", list.size());
     println!("{}", list);
 }

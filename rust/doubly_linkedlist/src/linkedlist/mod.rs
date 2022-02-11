@@ -39,25 +39,41 @@ impl<T> Cons<T> {
 }
 
 pub struct LinkedList<T> {
+	size: i32,
 	head: Option<Rc<RefCell<Cons<T>>>>,
 	tail: Option<Rc<RefCell<Cons<T>>>>
 }
-
-impl <T> LinkedList<T> {
+impl<T> LinkedList<T> {
 	pub fn new() -> Self {
-		Self { head: None, tail: None }
+		Self { head: None, tail: None, size: 0 }
 	}
 	pub fn append( &mut self, data: T ) {
 		match &mut self.tail {
 			Some(tail) => { 
 				let e = Cons::append(tail, data);
 				self.tail = e;
+				self.size += 1;
 			}
 			None => {
 				let e = Rc::new(RefCell::new(Cons::new(data)));
 				self.head = Some(e.clone());
             	self.tail = Some(e);
+				self.size += 1;
 			}
+		}
+	}
+	pub fn size(&self) -> i32 {
+		self.size
+	}
+	
+}
+
+impl<T> Iterator for LinkedList<T> {
+	type Item = Rc<RefCell<Cons<T>>>;
+	fn next( &mut self) -> Option<Self::Item> {
+		match &self.head {
+			Some(n) => Some(n.clone()),
+			None => None
 		}
 	}
 }
