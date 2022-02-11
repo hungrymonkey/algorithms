@@ -6,7 +6,7 @@ const Node = struct {
     r: ?*Node,
 };
 
-const BST = struct {
+pub const BST = struct {
     root: ?*Node,
 };
 
