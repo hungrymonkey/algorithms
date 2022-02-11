@@ -4,13 +4,35 @@ const Node = struct {
     val: i32,
     l: ?*Node,
     r: ?*Node,
+    
+    pub fn insert(self: *Node, v: i32) ?*Node {
+        self.l = &Node{ .val = v, .l = null, .r = null };
+        return null;
+    }
+    pub fn print(self: *Node) anyerror!void {
+        //if(self.l != null) try self.l.?.print();
+        const stdout = std.io.getStdOut().writer();
+        try stdout.print("Hello, {d}!\n", .{self.val});
+        //if(self.r != null) try self.r.?.print();
+    }
 };
 
 pub const BST = struct {
     root: ?*Node,
+
+    pub fn insert(self: *BST, v: i32) ?*Node {
+        if (self.root == null) {
+            self.root = &Node{ .val = v, .l = null, .r = null };
+            return self.root;
+        } 
+        return self.root.?.insert(v);
+    }
+    pub fn print(self: *BST) anyerror!void {
+        try self.root.?.print();
+    }
 };
 
-fn bin_insert(b: *BST, v: i32) *Node {
+pub fn bin_insert(b: *BST, v: i32) *Node {
     if (b.root == null) {
         b.root = Node{ .val = v, .l = null, .r = null };
         return b.root;
@@ -29,10 +51,5 @@ fn node_insert(curr: *Node, v: i32) *Node {
         return node_insert(curr.l, v);
     }
 }
-fn print_bin(b: *BST) void {
-    if(b == null) return;
-    print_bin(b.l);
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("Hello, {d}!\n", .{b.val});
-    print_bin(b.r);
-}
+
+
