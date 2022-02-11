@@ -38,6 +38,12 @@ impl<T> Cons<T> {
 	}
 }
 
+impl<T: Display> Display for Cons<T> {
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
+		write!(f, "{}", self.data)
+	}
+}
+
 pub struct LinkedList<T> {
 	size: i32,
 	head: Option<Rc<RefCell<Cons<T>>>>,

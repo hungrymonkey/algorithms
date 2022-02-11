@@ -9,5 +9,9 @@ fn main() {
     }
     //list.next().append(10)
     println!("Size of list: {}", list.size());
+    match list.next() {
+        Some(n) => { println!("{}", n.borrow().to_string()) }
+        None => {}
+    }
     println!("{}", list);
 }
