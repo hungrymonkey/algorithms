@@ -32,6 +32,7 @@ fn node_insert(curr: *Node, v: i32) *Node {
 fn print_bin(b: *BST) void {
     if(b == null) return;
     print_bin(b.l);
+    const stdout = std.io.getStdOut().writer();
     try stdout.print("Hello, {d}!\n", .{b.val});
     print_bin(b.r);
 }
