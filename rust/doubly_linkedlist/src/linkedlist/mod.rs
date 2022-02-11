@@ -64,13 +64,19 @@ impl <T> LinkedList<T> {
 
 impl<T: Display> Display for LinkedList<T> {
 	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
-		write!(f, "[");
+		if let Err(e) = write!(f, "[") {
+			return Err(e);
+		}
 		let mut data = self.head.clone();
 		while let Some(e) = data {
-			write!(f, "{}", e.borrow().data);
+			if let Err(e) = write!(f, "{}", e.borrow().data) {
+				return Err(e);
+			}
 			data = e.borrow().next.clone();
 			if data.is_some() {
-				write!(f, ", ");
+				if let Err(e) = write!(f, ", ") {
+					return Err(e);
+				}
 			}
 		}
 		write!(f, "]")
