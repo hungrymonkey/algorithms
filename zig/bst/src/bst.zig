@@ -30,6 +30,33 @@ pub const BST = struct {
     pub fn print(self: *BST) anyerror!void {
         try self.root.?.print();
     }
+    pub fn begin(self: *BST) ?*Node {
+        var n: *Node = self.treeRoot;
+        while( n ){
+            if( n.r == null) return n;
+            n = n.r;
+        }
+        return null;
+    }
+
+    pub fn next(self: *BST) ?*Node {
+        if( self.r ){
+            var n: *Node = self.r;
+            while(n.l) {
+                n = n.l;
+            }
+            return n;
+        } else {
+            var n: *Node = self.p;
+            while(n){
+                if( self.val < n.val){
+                    break;
+                }
+                n = n.p;
+            }
+            return n;
+        }
+    }
 };
 
 pub fn bin_insert(b: *BST, v: i32) *Node {
