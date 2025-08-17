@@ -12,6 +12,8 @@ datatype tree_with_parent =
 
 extern fun tree_insert (t: tree, value: int): tree
 extern fun tree_print_inorder (t: tree): void
+extern fun tree_print_node (t: tree): void
+extern fun tree_find(t: tree, value: int): tree
 
 
 implement tree_insert (t, value) =
@@ -25,6 +27,17 @@ implement tree_insert (t, value) =
     else
       t
 
+implement tree_find(t, value) = 
+   case+ t of
+   | Empty() => Empty()
+   | Node(v, parent, left, right) =>
+     if value < v then
+        tree_find(left, value)
+     else if value > v then
+        tree_find(right, value)
+     else
+        t
+
 
 implement tree_print_inorder(t) =
     case+ t of
@@ -37,6 +50,15 @@ implement tree_print_inorder(t) =
   in
     ()
   end
+
+implement tree_print_node(t) =
+   case+ t of
+    | Empty() => ()
+    | Node(v, parent, left, right) => let
+    val () = print(v)
+in
+()
+end
 
 extern fun build_tree (): tree
 
@@ -55,6 +77,9 @@ implement main0 () = let
 
   val () = println!("Inorder traversal:")
   val () = tree_print_inorder(tree)
+  val () = println!()
+  val tnode = tree_find(tree, 30)
+  val () = tree_print_node(tnode)
   val () = println!()
 in
   ()
