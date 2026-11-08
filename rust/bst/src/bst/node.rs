@@ -44,19 +44,18 @@ impl<T : Ord> Ord for Node<T> {
       }
    }
 }
+   */
 impl <T : Ord> Node<T> {
    pub fn new(v: T) -> Node<T> {
-      Node::Leaf(v)
+      Node::Node( v, None, None, None)
    }
    pub fn push(&mut self, v: T) -> Node<T> {
-      
       Node::Nil
    }
-   pub fn get(&self) -> Option<T> {
+   pub fn get(&self) -> Option<&T> {
       match self {
          Node::Nil => None,
-         Node::Leaf(e) => Some(*e),
-         Node::Node(e,_,_,_) => Some(*e)
+         Node::Node(e,_,_,_) => Some(e)
       }
    }
    pub fn cmp(&self, other: &Self) -> Ordering {
@@ -69,7 +68,7 @@ impl <T : Ord> Node<T> {
    }
    
 }
-   */
+   
 /*
 impl <T: fmt::Display> fmt::Display for Node<T>{
    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

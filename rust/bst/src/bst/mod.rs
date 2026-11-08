@@ -17,7 +17,7 @@ impl <T: Ord> BST<T> {
    }
    pub fn insert(&mut self, v: T) -> bool {
       
-      match self.root {
+      match &self.root {
          Node::Nil => {
             self.root = 
                Node::Node(
@@ -25,6 +25,9 @@ impl <T: Ord> BST<T> {
                );
             self.size += 1;
             return true;
+         },
+         Node::Node(e, None, None, None) => {
+
          },
          _ => {
 
