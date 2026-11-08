@@ -1,13 +1,17 @@
 use std::fmt;
 use std::cmp::{Ordering};
-use std::rc::Weak;
+use std::cell::RefCell;
+use std::rc::{Rc, Weak};
+
+pub type NodeRef<T> = Rc<RefCell<Node<T>>>;
 
 pub enum Node<T> {
-   Leaf(T),
+   //Leaf(T),
    //Parent, Left, Right
-   Node(T, Option<Weak<Node<T>>>, Box<Node<T>>, Box<Node<T>>),
+   Node(T, Option<Weak<RefCell<Node<T>>>>, Option<NodeRef<T>>, Option<NodeRef<T>>),
    Nil
 }
+/*
 impl<T : Eq + Ord> PartialEq for Node<T> {
    fn eq(&self, other: &Node<T>) -> bool {
       match (self.get(), other.get()) {
@@ -17,6 +21,8 @@ impl<T : Eq + Ord> PartialEq for Node<T> {
       }
    }
 }
+*/
+/*
 impl<T: Ord> Eq for Node<T> {
 
 }
@@ -63,6 +69,8 @@ impl <T : Ord> Node<T> {
    }
    
 }
+   */
+/*
 impl <T: fmt::Display> fmt::Display for Node<T>{
    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
       match *self {
@@ -72,4 +80,4 @@ impl <T: fmt::Display> fmt::Display for Node<T>{
       }
    }
 }
-
+*/

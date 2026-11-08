@@ -1,11 +1,14 @@
 use std::fmt;
+use std::cell::RefCell;
+use std::rc::{Rc  };
+
 
 mod node;
-use self::node::Node as Node;
+use self::node::{Node, NodeRef};
 
 pub struct BST<T> {
    size: u32,
-   root: Node<T>
+   root: Node<T>,
 }
 
 impl <T: Ord> BST<T> {
@@ -16,18 +19,14 @@ impl <T: Ord> BST<T> {
       
       match self.root {
          Node::Nil => {
-            self.root = Node::Leaf(v);
+            self.root = 
+               Node::Node(
+                  v, None, None, None
+               );
             self.size += 1;
             return true;
          },
-         Node::Leaf(e) => {
-            if e < v {
-               self.root = Node::Node(e, None, Box::new(Node::Leaf(v)), Box::new(Node::Nil) )
-            } else {
-               self.root = Node::Node(e, None, Box::new(Node::Nil), Box::new(Node::Leaf(v)) )
-            }
-         }
-         Node::Node(e, _, l, r ) => {
+         _ => {
 
          }
       }
@@ -39,11 +38,11 @@ impl <T: Ord> BST<T> {
       self.size == 0
    }
 }
-
+/*
 impl <T: fmt::Display> fmt::Display for BST<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "[{}]", self.root)
     }
 }
-
+*/
 
